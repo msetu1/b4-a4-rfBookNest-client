@@ -10,13 +10,14 @@ Live Link:
 
 ## Installation:
 ### Setup
-npm create vite@latest
-npm i react-router-dom react-hook-form
-npm i antd jwt-decode sonner zod redux-persist
-npm install @reduxjs/toolkit react-redux
+npm create vite@latest <br />
+npm i react-router-dom react-hook-form <br />
+npm i antd jwt-decode sonner zod redux-persist <br />
+npm install @reduxjs/toolkit react-redux <br />
 npm i react-icons axios react-spinners swiper framer-motion
 
 <br />
+
 cd 
 
 ```
