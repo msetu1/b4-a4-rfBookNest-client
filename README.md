@@ -3,13 +3,15 @@
 ## Hi !
 ### This is Setu AKther
 
+Please take a look at my README file, and if there are any mistakes or shortcomings, kindly point them out with forgiveness and understanding.
+
 Live Link:
 ```
 
 ```
 
 ## Installation:
-### Setup
+### Front-end Setup
 npm create vite@latest <br />
 npm i react-router-dom react-hook-form <br />
 npm i antd jwt-decode sonner zod redux-persist <br />
@@ -29,3 +31,4 @@ Run Project
 ```
 npm run dev
 ```
+My Email: msetu5763@gmail.com
