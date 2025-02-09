@@ -5,7 +5,7 @@ import Login from "../pages/Authentication/Login";
 import AllProducts from "../pages/products/AllProducts";
 import ProductDetails from "../pages/products/ProductDetails";
 import Register from "../pages/Authentication/Register";
-import ContactUs from "../components/Home/ContactUs";
+import ContactUs from "../pages/ContactUse/ContactUs";
 import OurTeam from "../components/Home/OurTeam";
 import Gallery from "../pages/Gallery/Gallery";
 const router = createBrowserRouter([

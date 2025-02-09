@@ -32,7 +32,7 @@ const topRates =[
 
 const TopRatedBooks = () => {
     return (
-       <div className="max-w-[90%] mx-auto  border">
+       <div className="max-w-[90%] mx-auto ">
         <CommonTitle title={`Top Rated Books`}/>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 ">
           {

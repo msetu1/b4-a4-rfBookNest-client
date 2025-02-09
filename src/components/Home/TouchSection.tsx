@@ -1,100 +1,140 @@
+import { useState } from "react";
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  message: string;
+}
 
 const TouchSection = () => {
-  
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Submitted Form Data:", formData);
+  };
+
   return (
-    <div className="max-w-7xl mx-auto bg-black bg-gradient-to-br from-[#6a00f4] via-transparent to-purple-500 ">
-      <div className="flex flex-col lg:flex-row items-center text-white gap-4 p-16">
-        <div className="w-full lg:w-[50%]">
-          <div style={{ height: "500px", width: "100%" }}>
-            <img className="h-full" src="https://cdni.iconscout.com/illustration/premium/thumb/contact-us-illustration-download-in-svg-png-gif-file-formats--call-logo-customer-service-support-onboarding-pack-business-illustrations-4849052.png?f=webp" alt="" />
-          </div>
+    <div className="max-w-7xl mx-auto bg-gradient-to-br bg-black from-[#6a00f4] via-transparent to-purple-500 text-white p-8 lg:p-16 rounded-lg">
+      <div className="flex flex-col lg:flex-row items-center gap-8">
+        {/* Left Side - Image */}
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <img
+            className="max-h-[350px] w-auto object-contain"
+            src="https://cdni.iconscout.com/illustration/premium/thumb/contact-us-illustration-download-in-svg-png-gif-file-formats--call-logo-customer-service-support-onboarding-pack-business-illustrations-4849052.png?f=webp"
+            alt="Contact Illustration"
+          />
         </div>
-        <div className="w-full lg:w-[50%] ">
-          <h2 className="uppercase lg:text-4xl font-bold mb-5">GET IN TOUCH</h2>
-          <div className="flex flex-col gap-5">
-          <div className="w-full">
-              <label
-                  htmlFor="services"
-                  className="block text-white mb-2 font-semibold text-xs"
-                >
-                 Name
-                </label>
+
+        {/* Right Side - Form */}
+        <div className="w-full lg:w-1/2">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-center lg:text-left">GET IN TOUCH</h2>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {/* Name Field */}
+            <div>
+              <label htmlFor="name" className="block font-semibold text-sm mb-2">Name</label>
               <input
-              type="text"
-              name="name"
-              id=""
-              placeholder="Enter your name..."
-              className="bg-[#1B1B31] rounded-lg border border-gray-700 p-3 w-full"
-            />
-          </div>
-            <div className="w-full">
-              <label
-                  htmlFor="services"
-                  className="block text-white mb-2 font-semibold text-xs"
-                >
-                 Email
-                </label>
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name..."
+                className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                required
+              />
+            </div>
+
+            {/* Email Field */}
+            <div>
+              <label htmlFor="email" className="block font-semibold text-sm mb-2">Email</label>
               <input
-              type="text"
-              name="email"
-              id=""
-              placeholder="Enter your email..."
-              className="bg-[#1B1B31] rounded-lg border border-gray-700 p-3 w-full"
-            />
-              </div>
-            <div className="flex items-center justify-between gap-3">
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email..."
+                className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                required
+              />
+            </div>
+
+            {/* Phone and Services Selection */}
+            <div className="flex flex-col lg:flex-row gap-4">
+              {/* Phone Field */}
               <div className="w-full">
-              <label
-                  htmlFor="services"
-                  className="block text-white mb-2 font-semibold text-xs"
-                >
-                 Phone
-                </label>
-              <input
-              type="text"
-              name="phone"
-              id=""
-              placeholder="Enter your number..."
-              className="bg-[#1B1B31] rounded-lg border border-gray-700 p-3 w-full"
-            />
+                <label htmlFor="phone" className="block font-semibold text-sm mb-2">Phone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Enter your number..."
+                  className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                  required
+                />
               </div>
+
+              {/* Services Selection */}
               <div className="w-full">
-                <label
-                  htmlFor="services"
-                  className="block text-white mb-2 font-semibold text-xs"
-                >
-                  Which are You Looking for Support in?
-                </label>
+                <label htmlFor="service" className="block font-semibold text-sm mb-2">Which are you looking for support in?</label>
                 <select
-                  id="services"
-                  className="bg-[#1B1B31] rounded-lg border border-gray-700 p-3 w-full"
+                  id="service"
+                  name="service"
+                  value={formData.service}
+                  onChange={handleChange}
+                  className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none cursor-pointer"
+                  required
                 >
-                  <option value="">Choose services</option>
+                  <option value="">Choose service</option>
                   <option value="support">Support</option>
                   <option value="inquiry">Inquiry</option>
                   <option value="other">Other</option>
                 </select>
               </div>
             </div>
-             
-            <textarea
-              name=""
-              id=""
-              cols="30"
-              rows="3"
-              placeholder="Write Your Message"
-              className="bg-[#1B1B31] rounded-lg border border-gray-700 p-3"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="mt-5 px-8 py-4  text-white font-medium border border-[#C16EFD] rounded-lg bg-[linear-gradient(105deg,_#6384FC_4.1%,_#C16EFD_54.8%,_#6384FC_92.38%)] flex items-center justify-center"
-          >
-            <p>Send Message</p>
-          </button>
+
+            {/* Message Field */}
+            <div>
+              <label htmlFor="message" className="block font-semibold text-sm mb-2">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Write your message..."
+                className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                rows={3}
+                required
+              ></textarea>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="mt-4 px-6 py-3 text-white font-medium rounded-lg bg-gradient-to-r from-[#6384FC] to-[#C16EFD] hover:opacity-90 transition duration-300 flex justify-center"
+            >
+              Send Message
+            </button>
+          </form>
         </div>
       </div>
     </div>
   );
 };
+
 export default TouchSection;

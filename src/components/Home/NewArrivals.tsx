@@ -1,8 +1,8 @@
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CommonTitle from "../Common/CommonTitle";
+
 const books = [
   { 
     id: 1, 
@@ -48,13 +48,13 @@ const NewArrivals = () => {
     slidesToScroll: 1,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // Tablets
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768, // Mobile (small screens)
         settings: {
           slidesToShow: 1,
         },
@@ -63,23 +63,28 @@ const NewArrivals = () => {
   };
 
   return (
-    <div className="max-w-[90%] mx-auto my-16 border">
-      <CommonTitle title={`New Arrivals & Best Sellers`} />
+    <div className="max-w-[90%] mx-auto my-16 ">
+      <CommonTitle title="New Arrivals & Best Sellers" />
       
       {/* Carousel Section */}
       <Slider {...settings}>
         {books.map((book) => (
-          <div key={book.id} className="p-4 ">
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden ">
-              <div className=" flex items-center  justify-center
-              ">
-              <img className="w-[210px] h-[240px] object-cover" src={book.image} alt={book.title} />
+          <div key={book.id} className="p-4">
+            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+              {/* Image Section */}
+              <div className="flex items-center justify-center">
+                <img 
+                  className="w-[210px] h-[240px] object-cover" 
+                  src={book.image} 
+                  alt={book.title} 
+                />
               </div>
+
+              {/* Content Section */}
               <div className="p-4">
                 <h3 className="text-xl font-semibold">{book.title}</h3>
                 <p className="text-sm text-gray-600">by {book.author}</p>
-                <p className="my-2 text-gray-600">{book?.description}</p>
-                <p className="mt-2 text-xl text-end font-bold text-blue-600">{book.price}</p>
+                <p className="my-2 text-gray-600">{book.description}</p><p className="mt-2 text-xl text-end font-bold text-blue-600">{book.price}</p>
               </div>
             </div>
           </div>
