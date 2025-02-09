@@ -7,6 +7,7 @@ import ProductDetails from "../pages/products/ProductDetails";
 import Register from "../pages/Authentication/Register";
 import ContactUs from "../components/Home/ContactUs";
 import OurTeam from "../components/Home/OurTeam";
+import Gallery from "../pages/Gallery/Gallery";
 const router = createBrowserRouter([
         {
                 path: "/",
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
                   {
                     path: "/meet-our-team",
                     element: <OurTeam/>,
+                  },
+                  {
+                    path: "/gallery",
+                    element: <Gallery/>,
                   },
                 //   payment method implement 
                   
