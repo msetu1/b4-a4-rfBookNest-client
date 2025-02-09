@@ -10,7 +10,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-     {/* <RouterProvider router={router} /> */}
      <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <RouterProvider router={router} />

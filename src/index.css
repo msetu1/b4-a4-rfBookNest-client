@@ -5,3 +5,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.my-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

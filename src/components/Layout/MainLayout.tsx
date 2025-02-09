@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
-import DarkMode from "../DarkMode";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const MainLayout = () => {
     return (
         <div>
-            <DarkMode/>
-            <h2 className="font-lobster">sdfghjgfdsa</h2>
+            <Navbar/>
             <Outlet/>
+            <Footer/>
         </div>
     );
 };
