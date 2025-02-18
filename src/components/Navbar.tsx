@@ -10,7 +10,6 @@ const Navbar = () => {
 
   const dispatch = useAppDispatch();
   const user = useAppSelector(useCurrentUser);
-  // console.log(user?.imageUrl);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

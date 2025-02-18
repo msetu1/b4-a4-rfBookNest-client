@@ -1,8 +1,25 @@
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-const AdminEditProfileForm = ({user}) => {
+type User = {
+      email: string;
+      gender?: string;
+      phone?: string;
+      country?: string;
+      district?: string;
+      streetAddress?: string;
+      facebook?: string;
+      linkedin?: string;
+      github?: string;
+      status?: string;
+    };
+    
+    type EditProfileFormProps = {
+      user: User;
+    };
+
+const AdminEditProfileForm: React.FC<EditProfileFormProps> = ({user}) => {
     const {
-                handleSubmit,
+                
                 register,
                 formState: { errors },
               } = useForm();

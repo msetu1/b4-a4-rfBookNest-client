@@ -23,7 +23,6 @@ const TouchSection = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submitted Form Data:", formData);
   };
 
   return (

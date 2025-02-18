@@ -13,7 +13,7 @@ type TBook = {
   category: string;
   description: string;
   imageUrl: string;
-  isAvaillable: boolean;
+  isAvailable: boolean;
   isDeleted: boolean;
   numberOfBooks: number;
   price: string;
@@ -35,36 +35,10 @@ const ProductDetails = () => {
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden text-white text-center px-4 bg-black">
       <GradientBackground />
       <RingLoader  size={80} color="#C16EFD" />
+      <p className="mt-4 text-lg font-semibold">Loading Product Details...</p>
     </div>
   );
 }
-
-  // const handleProceedToBuy = async (id: string) => {
-  //   if (!user) {
-  //     toast.error("You want to login first..");
-  //     return navigate("/login");
-  //   }
-
-  //   if (bookData.numberOfBooks < 1) {
-  //     return toast.error("Insufficient stock", { duration: 2000 });
-  //   }
-
-  //   // console.log(id);
-  //   if (user?.email === bookData?.authorEmail) {
-  //     return toast.error("You cannot buy your own product");
-  //   }
-
-  //   const productInfo = {
-  //     productId: id,
-  //     userInfo: {
-  //       ...user,
-  //     },
-  //   };
-
-  //   const result = await addOrder(productInfo).unwrap();
-
-  //   window.location.replace(result.url);
-  // };
 
   return (
     <div>

@@ -54,7 +54,6 @@ const router = createBrowserRouter([
                     path: "/gallery",
                     element: <Gallery/>,
                   },
-                //   payment method implement 
                   
                 ],
         },

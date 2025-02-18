@@ -27,7 +27,7 @@ type TBook = {
   category: string;
   description: string;
   imageUrl: string;
-  isAvaillable: boolean;
+  isAvailable: boolean;
   isDeleted: boolean;
   numberOfBooks: number;
   price: string;

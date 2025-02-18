@@ -52,12 +52,9 @@ const Register = () => {
         ...data,
         imageUrl,
       };
-      // console.log(data);
       const result = await registerUser(userInfo).unwrap();
-      // console.log("result => ", result);
       if (result?.success) {
         toast.success("Registration Successfully..", {
-          // id: toastId,
           duration: 2000,
         });
         reset();
@@ -66,7 +63,6 @@ const Register = () => {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      // console.log("error =>", error);
       toast.error(error.data.message, { duration: 2000 });
     }
   };

@@ -1,9 +1,4 @@
-import {
-  MdAddChart,
-  MdDashboard,
-  MdManageHistory,
-  MdOutlineProductionQuantityLimits,
-} from "react-icons/md";
+import { MdAddChart, MdDashboard, MdManageHistory, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { GiSplitCross } from "react-icons/gi";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
@@ -23,28 +18,39 @@ const userRole = {
   USER: "user",
 };
 
+interface MenuItem {
+  key: string;
+  icon?: React.ReactNode;
+  label: React.ReactNode;
+  children?: MenuItem[];
+}
+
 const DashboardLayout: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
     toast.success("Logout Successfully");
     navigate("/");
   };
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const user = useAppSelector(useCurrentUser);
-  let sidebarItems;
-  let profileItem;
+  let sidebarItems: MenuItem[] = [];
+  let profileItem: MenuItem = {
+    key: "default-profile",
+    icon: <CgProfile />,
+    label: <span>Profile</span>,
+  };
 
-  switch (user!.role) {
+  switch (user?.role) {
     case userRole.USER:
       sidebarItems = [
         {
           key: "/",
-          icon: "",
           label: (
             <NavLink to={"/"}>
               <h2 className="text-3xl font-bold text-[#6a00f4] font-lobster mt-4">
@@ -68,13 +74,10 @@ const DashboardLayout: React.FC = () => {
           ),
         },
       ];
-
       profileItem = {
         key: "user-profile",
         icon: <CgProfile />,
-        label: (
-          <NavLink to={"/user/dashboard/user-profile"}>Profile</NavLink>
-        ),
+        label: <NavLink to={"/user/dashboard/user-profile"}>Profile</NavLink>,
       };
       break;
 
@@ -82,7 +85,6 @@ const DashboardLayout: React.FC = () => {
       sidebarItems = [
         {
           key: "/",
-          icon: "",
           label: (
             <NavLink to={"/"}>
               <h2 className="text-3xl font-bold text-[#6a00f4] font-lobster mt-4">
@@ -105,27 +107,21 @@ const DashboardLayout: React.FC = () => {
               key: "AddProduct",
               icon: <MdAddChart />,
               label: (
-                <NavLink to={"/admin/dashboard/add-product"}>
-                  Add Product
-                </NavLink>
+                <NavLink to={"/admin/dashboard/add-product"}>Add Product</NavLink>
               ),
             },
             {
               key: "ManageProduct",
               icon: <MdManageHistory />,
               label: (
-                <NavLink to={"/admin/dashboard/manage-product"}>
-                  Manage Product
-                </NavLink>
+                <NavLink to={"/admin/dashboard/manage-product"}>Manage Product</NavLink>
               ),
             },
             {
               key: "ManagingOrders",
               icon: <FaJediOrder />,
               label: (
-                <NavLink to={"/admin/dashboard/managing-orders"}>
-                  Managing Orders
-                </NavLink>
+                <NavLink to={"/admin/dashboard/managing-orders"}>Managing Orders</NavLink>
               ),
             },
           ],
@@ -147,13 +143,10 @@ const DashboardLayout: React.FC = () => {
           ],
         },
       ];
-
       profileItem = {
         key: "admin-profile",
         icon: <CgProfile />,
-        label: (
-          <NavLink to={"/admin/dashboard/admin-profile"}>Profile</NavLink>
-        ),
+        label: <NavLink to={"/admin/dashboard/admin-profile"}>Profile</NavLink>,
       };
       break;
 
@@ -171,35 +164,41 @@ const DashboardLayout: React.FC = () => {
         collapsedWidth="0"
         style={{ height: "100vh", position: "sticky", top: 0, left: 0 }}
       >
-        {/* Sidebar with profile section at bottom */}
         <div className="h-full flex flex-col justify-between">
-          {/* Top Menu Items */}
           <Menu
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["4"]}
             items={sidebarItems}
           />
-        <div>
-        {/* Profile Section at Bottom */}
-        <hr/>
-        <Menu theme="dark" mode="inline" items={[profileItem]} style={{marginTop:'5px'}} />
-        <div className="flex items-center justify-center mx-1 mt-2">
-        <button
-                  onClick={() => handleLogout()}
-                  className="w-full  mb-[40px] text-center  py-[10px] text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:from-blue-500 hover:to-purple-500 focus:outline-none"
-                >
-                  <span className="text-white">Logout</span>
-        </button>
-        </div>
-        </div>
-         
+          <div>
+            <hr />
+            <Menu
+              theme="dark"
+              mode="inline"
+              items={[profileItem]}
+              style={{ marginTop: "5px" }}
+            />
+            <div className="flex items-center justify-center mx-1 mt-2">
+              <button
+                onClick={handleLogout}
+                className="w-full mb-[40px] text-center py-[10px] text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:from-blue-500 hover:to-purple-500 focus:outline-none"
+              >
+                <span className="text-white">Logout</span>
+              </button>
+            </div>
+          </div>
         </div>
       </Sider>
 
       <Layout>
         <Header
-          style={{ padding: 0, position: "sticky", top: 0, zIndex: 1000 }}
+          style={{
+            padding: 0,
+            position: "sticky",
+            top: 0,
+            zIndex: 1000,
+          }}
           className="bg-gradient-to-r from-[#1B1B31] via-purple-500 to-[#1B1B31] min-w-full"
         >
           <Button

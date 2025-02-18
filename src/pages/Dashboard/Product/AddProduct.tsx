@@ -89,6 +89,7 @@ const AddProduct = () => {
       <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden text-white text-center px-4 bg-black">
         <GradientBackground />
         <RingLoader  size={80} color="#C16EFD" />
+        <p className="mt-4 text-lg font-semibold">Loading Add product...</p>
       </div>
     );
   }

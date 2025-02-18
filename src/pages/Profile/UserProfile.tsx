@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaUser, FaEnvelope, FaPhone, FaVenus } from "react-icons/fa";
 import { useAppSelector } from "../../redux/hooks";
 import { useCurrentUser } from "../../redux/feature/auth/authSlice";
@@ -6,11 +6,17 @@ import AdditionalInfo from "./AdditionalInfo";
 import AccountSettings from "./AccountSettings";
 import EditProfileForm from "./EditProfileForm";
 import HomeGradient from "../../UI/HomeGradient";
+import { RingLoader } from "react-spinners";
 
 export default function UserProfile() {
   const [activeTab, setActiveTab] = useState("overview");
   const [isEditing, setIsEditing] = useState(false);
-   const user = useAppSelector(useCurrentUser);
+  const [loading, setLoading] = useState(true);
+  const user = useAppSelector(useCurrentUser);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1000); // Simulating API delay
+  }, []);
 
   const menuItems = [
     { id: "overview", label: "Profile Overview", icon: <FaUser />, activeColor: "bg-blue-100 text-black font-semibold" },
@@ -18,20 +24,23 @@ export default function UserProfile() {
     { id: "settings", label: "Account Settings", icon: "⚙️", activeColor: "bg-gray-100 text-black font-semibold" },
   ];
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white text-center">
+        <RingLoader size={80} color="#C16EFD" />
+        <p className="mt-4 text-lg font-semibold">Loading User Profile...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex gap-6 p-6 text-white  min-h-screen bg-black">
-      <HomeGradient/>
+    <div className="flex flex-col lg:flex-row gap-6 p-6 text-white min-h-screen bg-black">
+      <HomeGradient />
       {/* Sidebar */}
-      <div className="w-[25%] text-white border border-gray-700 rounded-lg shadow-lg p-6">
+      <div className="lg:w-[25%] w-full text-white border border-gray-700 rounded-lg shadow-lg p-6">
         <div className="flex flex-col items-center">
-          <img
-            src={user?.imageUrl}
-            alt="Profile"
-            className="w-24 h-24 rounded-full"
-          />
-          <h2 className="mt-4 text-lg font-semibold text-blue-500">
-          {user?.name}
-          </h2>
+          <img src={user?.imageUrl} alt="Profile" className="w-24 h-24 rounded-full" />
+          <h2 className="mt-4 text-lg font-semibold text-blue-500">{user?.name}</h2>
           <p className="text-white">{user?.email}</p>
           <div className="w-full mt-4">
             <p className="text-sm text-white mb-1">Profile Completion</p>
@@ -56,7 +65,7 @@ export default function UserProfile() {
           ))}
         </div>
 
-        <button 
+        <button
           className="mt-6 w-full bg-blue-600 font-semibold text-white py-2 rounded-lg"
           onClick={() => setIsEditing(true)}
         >
@@ -65,11 +74,9 @@ export default function UserProfile() {
       </div>
 
       {/* Content */}
-      <div className="w-[75%] text-white border border-gray-700  rounded-lg shadow-lg p-6">
+      <div className="lg:w-[75%] w-full text-white border border-gray-700 rounded-lg shadow-lg p-6">
         {isEditing ? (
-          <div>
-            <EditProfileForm user={user} />
-          </div>
+          <EditProfileForm user={user} />
         ) : (
           <>
             {activeTab === "overview" && (
@@ -92,17 +99,8 @@ export default function UserProfile() {
               </>
             )}
 
-            {activeTab === "info" && (
-              <>
-                <AdditionalInfo user={user} />
-              </>
-            )}
-
-            {activeTab === "settings" && (
-              <>
-                <AccountSettings user={user} />
-              </>
-            )}
+            {activeTab === "info" && <AdditionalInfo user={user} />}
+            {activeTab === "settings" && <AccountSettings user={user} />}
           </>
         )}
       </div>

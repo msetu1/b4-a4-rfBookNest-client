@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { AllProductBannerProps } from "../../types/dataTypes";
 
-const AllProductBanner = ({setPriceFilter,priceFilter,setSearchTerm,searchTerm}) => {
+const AllProductBanner: React.FC<AllProductBannerProps> = ({setPriceFilter,priceFilter,setSearchTerm,searchTerm}) => {
     return (
         <div
       className="relative min-h-[300px] md:min-h-[400px] lg:min-h-[450px] bg-cover bg-center"

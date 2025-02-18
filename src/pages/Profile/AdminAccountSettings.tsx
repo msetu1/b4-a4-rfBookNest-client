@@ -1,6 +1,7 @@
 import { FaCheckCircle, FaClock, FaGraduationCap } from "react-icons/fa";
+import { AccountSettingsProps } from "../../types/dataTypes";
 
-const AdminAccountSettings = ({user}) => {
+const AdminAccountSettings = ({user}: AccountSettingsProps) => {
       // Convert to a JavaScript Date object
       const date = new Date();
       const formattedDate = date.toDateString();

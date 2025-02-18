@@ -1,7 +1,8 @@
 import { FaFacebook, FaGithub, FaLinkedin, FaMapMarkerAlt } from "react-icons/fa";
 import { MdOutlineHome, MdOutlineLocationCity } from "react-icons/md";
+import { AdditionalSettingsProps } from "../../types/dataTypes";
 
-const AdminAdditionalInfo = ({user}) => {
+const AdminAdditionalInfo = ({user}: AdditionalSettingsProps) => {
     return (
         <div className="px-8 font-inter">
                            <h2 className="text-2xl font-bold mb-5">Additional Information</h2>

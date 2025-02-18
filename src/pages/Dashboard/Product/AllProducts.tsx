@@ -12,7 +12,7 @@ type TBook = {
   category: string;
   description: string;
   imageUrl: string;
-  isAvaillable: boolean;
+  isAvailable: boolean;
   isDeleted: boolean;
   numberOfBooks: number;
   price: string;
@@ -30,8 +30,6 @@ const AllProducts = () => {
   const [priceFilter, setPriceFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading } =useAllBooksDataQuery(undefined);
-
-  // console.log(data);
 
   useEffect(() => {
     setCurrentPage(1);

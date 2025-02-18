@@ -7,8 +7,14 @@ import { useAppSelector } from "../../redux/hooks";
 import { useCurrentUser } from "../../redux/feature/auth/authSlice";
 import { useAddOrderMutation, useHandlePaymentSuccessMutation } from "../../redux/feature/order/orderApi";
 import { toast } from "sonner";
+import { BookData } from "../../types/dataTypes";
 
-const CheckoutForm = ({ closeModal, productInfo }) => {
+interface CheckoutFormProps {
+  closeModal: () => void;
+  productInfo: BookData & { price: number }; // Define productInfo with the correct type
+}
+
+const CheckoutForm = ({ closeModal, productInfo }: CheckoutFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -29,22 +35,20 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
   const getClientSecret = async (price) => {
     try {
       // Use the addOrder mutation to create payment intent
-      const { data } = await addOrder(price); // This unwraps the mutation response
-
-      console.log(data);
+      const { data } = await addOrder(price); 
 
       if (data && data.clientSecret) {
-        setClientSecret(data.clientSecret); // Set the client secret from the response
+        setClientSecret(data.clientSecret); 
       } else {
         throw new Error("Client secret is missing in the response");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error("Error creating payment intent:", error);
       toast.error("Error creating payment intent");
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setProcessing(true);
   
@@ -64,12 +68,16 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
     });
   
     if (error) {
-      console.log("[error]", error);
       setCardError(error.message);
       setProcessing(false);
       return;
     } else {
       setCardError("");
+    }
+
+    if (paymentMethod) {
+      // You can use paymentMethod here safely
+      setCardError(""); // reset card error
     }
   
     const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
@@ -86,7 +94,6 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
     );
   
     if (confirmError) {
-      console.log(confirmError);
       setCardError(confirmError.message);
       setProcessing(false);
       return;
@@ -109,20 +116,13 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
      
   
       try {
-        // Step 1: Call the handlePaymentSuccess mutation to store order in the database
-        // const { data, error } = await handlePaymentSuccess(paymentInfo); // This sends payment data to your API
 
         const { data, error } = await handlePaymentSuccess(paymentInfo);
-console.log("Data:", data); // Inspect the response data
-console.log("Error:", error); // Inspect any error returned
   
         if (error) {
-          // Log the error from handlePaymentSuccess
-          console.error("Error from handlePaymentSuccess:", error);
           toast.error("Failed to store payment info.");
         } else {
           if (data.success) {
-            // Step 2: Update the UI and navigate to the order history page
             toast.success("Order Payment successfully");
             closeModal();
             navigate("/user/dashboard/view-order-history");
@@ -130,18 +130,14 @@ console.log("Error:", error); // Inspect any error returned
             toast.error("Failed to store payment info.");
           }
         }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
-        console.log("Error during payment success processing:", err);
         toast.error("Failed to process order");
       }
     }
   
     setProcessing(false);
   };
-  
-
-
-
 
   return (
     <>

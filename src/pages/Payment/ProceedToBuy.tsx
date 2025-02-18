@@ -1,7 +1,13 @@
 import { useState } from "react";
 import ProceedToBuyModal from "./ProceedToBuyModal";
+import { BookData } from "../../types/dataTypes";
 
-const ProceedToBuy = ({ bookData }) => {
+interface ProceedToBuyProps {
+  bookData: BookData;
+}
+
+
+const ProceedToBuy = ({ bookData }: ProceedToBuyProps) => {
   const [isOpen, setIsOpen] = useState(false);
  
   const numberOfBooks = bookData.numberOfBooks; 

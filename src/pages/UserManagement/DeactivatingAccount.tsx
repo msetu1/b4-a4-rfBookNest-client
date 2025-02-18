@@ -29,7 +29,6 @@ const DeactivatingAccounts = () => {
   const [deactivateAccount] = useDeactivateAccountMutation();
   const [activeAccount] = useActiveAccountMutation();
   const [changeRole] = useChangeRoleMutation();
-  // console.log(data?.data);
 
   if (isLoading) {
     return (
@@ -41,21 +40,15 @@ const DeactivatingAccounts = () => {
   }
 
   const usersData = data?.data;
-  // console.log(usersData);
 
   const handleDeactive = async (id: string) => {
     try {
-      // console.log(id);
 
       const userInfo = {
         id: id,
       };
 
-      // console.log(userInfo);
-
-      const result = await deactivateAccount(userInfo).unwrap(); // unwrap to get the actual response data
-      // console.log(result);
-      // handle the success response
+      const result = await deactivateAccount(userInfo).unwrap();  
 
       toast.success(result.message, { duration: 2000 });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -65,16 +58,14 @@ const DeactivatingAccounts = () => {
   };
   const handleActive = async (id: string) => {
     try {
-      // console.log(id);
 
       const userInfo = {
         id: id,
       };
 
-      // console.log(userInfo);
 
       const result = await activeAccount(userInfo).unwrap(); // unwrap to get the actual response data
-      // console.log(result);
+      
       // handle the success response
 
       toast.success(result.message, { duration: 2000 });
@@ -88,7 +79,6 @@ const DeactivatingAccounts = () => {
     selectedRole: string,
     selectedUserEmail: string
   ) => {
-    // console.log("Selected Role:", selectedRole);
 
     try {
       const userRole = {
