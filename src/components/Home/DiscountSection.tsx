@@ -25,7 +25,7 @@ const DiscountSection = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 rounded-xl shadow-lg text-white border my-16 max-w-[90%] mx-auto">
+    <div className="bg-gradient-to-br from-[#6a00f4] via-transparent to-purple-500 bg-black p-8 rounded-xl shadow-lg text-white border my-16 max-w-[90%] mx-auto">
       <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
         {/* Left Section - Text */}
         <div className="w-full lg:w-[50%]">

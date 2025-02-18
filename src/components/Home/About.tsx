@@ -32,7 +32,7 @@ const About = () => {
               />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold">rfBookNest</h2>
-            <p className="text-gray-400 mt-4 text-sm md:text-base">
+            <p className="text-gray-500 mt-4 text-sm md:text-base">
               Welcome to <strong>rfBookNest</strong>, your ultimate haven for book lovers, where literature comes alive, and every page tells a story. Whether you are searching for the latest <strong>bestsellers, timeless classics, or hidden literary gems</strong>, we have curated a diverse collection that caters to every reader’s taste. 
               <br /> <br />
               Step into our world and explore an extensive collection that transcends genres, cultures, and eras. Whether you are a casual reader, an avid book collector, or someone looking to rediscover the joy of reading, <strong>rfBookNest</strong> is your go-to destination.
@@ -41,7 +41,7 @@ const About = () => {
             <Link to="/meet-our-team">
               <button
                 type="submit"
-                className="mt-5 px-6 py-3 text-white font-medium border border-[#C16EFD] rounded-lg bg-[linear-gradient(105deg,_#6384FC_4.1%,_#C16EFD_54.8%,_#6384FC_92.38%)] flex items-center justify-center mx-auto lg:mx-0"
+                className="mt-6 px-6 py-3  font-semibold bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:from-blue-500 hover:to-purple-500 focus:outline-none text-white"
               >
                 <p>Explore Now</p>
               </button>

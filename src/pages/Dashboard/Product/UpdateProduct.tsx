@@ -8,6 +8,8 @@ import {
 } from "../../../redux/feature/productManagement/productAPi";
 import { toast } from "sonner";
 import { useParams } from "react-router-dom";
+import HomeGradient from "../../../UI/HomeGradient";
+import GradientBackground from "../../../UI/GradientBackground";
 
 interface BookFormData {
   title: string;
@@ -15,6 +17,7 @@ interface BookFormData {
   description: string;
   image: FileList;
   price: string;
+  bookDiscount:number;
   category: string;
 }
 
@@ -28,6 +31,7 @@ type TBook = {
   isDeleted: boolean;
   numberOfBooks: number;
   price: string;
+  bookDiscount:number;
   title: string;
   __v: number;
   _id: string;
@@ -38,15 +42,11 @@ const UpdateProduct = () => {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
-    // pollingInterval: 60000,
   });
 
   const [updateBook] = useUpdateBookMutation();
 
-  //   console.log(data?.data);
-
   const { id } = useParams();
-  //   console.log(id);
   const {
     handleSubmit,
     register,
@@ -54,12 +54,11 @@ const UpdateProduct = () => {
   } = useForm<BookFormData>();
 
   const matchBook = allBookData?.data?.find((item: TBook) => item?._id === id);
-  //   console.log(matchBook);
+ 
 
   const [loading, setLoading] = useState(false);
   const onSubmit: SubmitHandler<BookFormData> = async (data) => {
     try {
-      //   console.log(data);
 
       setLoading(true);
 
@@ -67,10 +66,8 @@ const UpdateProduct = () => {
         BookId: id,
         bookInfo: data,
       };
-      //   console.log(bookData);
 
       const result = await updateBook(bookData).unwrap();
-      //   console.log(result);
       toast.success(result.message,{duration:2000});
 
       setLoading(false);
@@ -82,141 +79,111 @@ const UpdateProduct = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] px-4">
-        <RingLoader size={80} color="#1ca944" />
+      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden text-white text-center px-4 bg-black">
+        <GradientBackground />
+        <RingLoader  size={80} color="#C16EFD" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] px-4">
-      <div className="max-w-4xl w-full text-white rounded-lg shadow-lg p-8 md:p-12 bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31]">
-        <h1 className="text-3xl font-bold text-center mb-6">Add a Book</h1>
-        <p className="text-center text-gray-400 mb-8">
-          Add a new book to your collection
-        </p>
+    <div className="min-h-screen bg-black px-4">
+      <HomeGradient/>
+      <h1 className="text-3xl font-bold text-white pt-5 mb-6">Update a Book</h1>
+      <div className="flex items-center justify-center">
+      <div className="max-w-[840px] w-full text-white rounded-lg shadow-lg p-8 md:p-12 border border-gray-700 mb-12">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {/* Title Field */}
-          <div>
-            <label className="block text-sm font-medium mb-2">Title</label>
-            <input
-              defaultValue={matchBook?.title}
-              {...register("title", { required: "Title is required" })}
-              type="text"
-              placeholder="Enter book title"
-              className={`w-full px-4 py-2 text-white rounded-lg  border ${
-                errors.title
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-700 focus:ring-blue-500"
-              } focus:outline-none focus:ring-2`}
-            />
-            {errors.title && (
-              <p className="text-red-500 text-sm mt-1">
-                Title is required you must be type{" "}
-              </p>
-            )}
+        
+          <div className="flex items-center justify-between gap-4">
+              <div className="w-full">
+                <label className="block text-sm font-medium mb-2">Title</label>
+                <input
+                  defaultValue={matchBook?.title}
+                  {...register("title", { required: "Title is required" })}
+                  type="text"
+                  placeholder="Enter book title"
+                  className="w-full px-4 py-2 bg-[#1B1B31] rounded-lg border border-gray-700 focus:outline-none focus:ring-2"
+                />
+                {errors.title && (
+                  <p className="text-red-500 text-sm mt-1">Title is required</p>
+                )}
+              </div>
+              <div className="w-full">
+                <label className="block text-sm font-medium mb-2">Number of Books</label>
+                <input
+                  defaultValue={matchBook?.numberOfBooks}
+                  {...register("numberOfBooks", { required: "Number of Books is required" })}
+                  type="number"
+                  placeholder="Numbers"
+                  className="w-full px-4 py-2 bg-[#1B1B31] rounded-lg border border-gray-700 focus:outline-none focus:ring-2"
+                />
+                {errors.numberOfBooks && (
+                  <p className="text-red-500 text-sm mt-1">Number of Books is required</p>
+                )}
+              </div>
           </div>
 
-          {/* Number of Books & Price*/}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Price Field */}
+          <div className="flex items-center justify-between gap-4">
+              <div className="w-full lg:w-[50%]">
+                <label className="block text-sm font-medium mb-2">Book Category</label>
+                <select
+                  defaultValue={matchBook?.category}
+                  id="bookCategory"
+                  {...register("category", { required: "Category is required" })}
+                  className="w-full px-4 py-2 bg-[#1B1B31] rounded-lg border border-gray-700 focus:outline-none focus:ring-2"
+                >
+                  <option value="" disabled>--Select a Category--</option>
+                  <option value="fiction">Fiction</option>
+                  <option value="academic">Academic & Education</option>
+                  <option value="children">Children's Books</option>
+                </select>
+                {errors.category && (
+                  <p className="text-red-500 text-sm mt-1">Category is required</p>
+                )}
+              </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-4">
+              <div className="w-full">
+                <label className="block text-sm font-medium mb-2">Price</label>
+                <input
+                  defaultValue={matchBook?.price}
+                  {...register("price", { required: "Price is required" })}
+                  type="text"
+                  placeholder="$"
+                  className="w-full px-4 py-2 bg-[#1B1B31] rounded-lg border border-gray-700 focus:outline-none focus:ring-2"
+                />
+                {errors.price && (
+                  <p className="text-red-500 text-sm mt-1">Price is required</p>
+                )}
+              </div>
+              <div className="w-full">
+                <label className="block text-sm font-medium mb-2">Book Discount</label>
+                <input
+                  defaultValue={matchBook?.bookDiscount}
+                  {...register("bookDiscount", { required: "Book Discount is required" })}
+                  type="text"
+                  placeholder="%"
+                  className="w-full px-4 py-2 bg-[#1B1B31] rounded-lg border border-gray-700 focus:outline-none focus:ring-2"
+                />
+                {errors.bookDiscount && (
+                  <p className="text-red-500 text-sm mt-1">Book Discount is required</p>
+                )}
+              </div>
+            </div>
+
             <div>
-              <label className="block text-sm font-medium mb-2">Price</label>
-              <input
-                defaultValue={matchBook?.price}
-                {...register("price", { required: "Price is required" })}
-                type="text"
-                placeholder="৳"
-                className={`w-full px-4 py-2 text-white rounded-lg  border ${
-                  errors.price
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-700 focus:ring-blue-500"
-                } focus:outline-none focus:ring-2`}
+              <label className="block text-sm font-medium mb-2">Description</label>
+              <textarea
+                defaultValue={matchBook?.description}
+                {...register("description", { required: "Description is required" })}
+                placeholder="Enter book description"
+                className="w-full px-4 py-2 bg-[#1B1B31] rounded-lg border border-gray-700 focus:outline-none focus:ring-2"
               />
-              {errors.price && (
-                <p className="text-red-500 text-sm mt-1">
-                  Price is required you must be type{" "}
-                </p>
+              {errors.description && (
+                <p className="text-red-500 text-sm mt-1">Description is required</p>
               )}
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Number of Books
-              </label>
-              <input
-                defaultValue={matchBook?.numberOfBooks}
-                {...register("numberOfBooks", {
-                  required: "Number of Books is required",
-                })}
-                type="number"
-                placeholder="Numbers"
-                className={`w-full px-4 py-2 text-white rounded-lg  border ${
-                  errors.numberOfBooks
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-700 focus:ring-blue-500"
-                } focus:outline-none focus:ring-2`}
-              />
-              {errors.numberOfBooks && (
-                <p className="text-red-500 text-sm mt-1">
-                  Number of Books is required you must be type
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Book Category */}
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Book Category
-            </label>
-            <select
-              defaultValue={matchBook?.category}
-              id="bookCategory"
-              className={`w-full px-4 py-2 text-gray-700 rounded-lg border ${
-                errors.category
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-700 focus:ring-blue-500"
-              } focus:outline-none focus:ring-2`}
-              {...register("category", { required: "Category is required" })}
-              // Use defaultValue for the default selection
-            >
-              <option value="" disabled>
-                --Select a Category--
-              </option>
-              <option value="fiction">Fiction</option>
-              <option value="academic">Academic & Education</option>
-              <option value="children">Children's Books</option>
-            </select>
-            {errors.category && (
-              <p className="text-red-500 text-sm mt-1">
-                Category is required you must be type{" "}
-              </p>
-            )}
-          </div>
-
-          {/* Description Field */}
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Description
-            </label>
-            <textarea
-              defaultValue={matchBook?.description}
-              {...register("description", {
-                required: "Description is required",
-              })}
-              placeholder="Enter book description"
-              className={`w-full px-4 py-2 text-white rounded-lg  border ${
-                errors.description
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-700 focus:ring-blue-500"
-              } focus:outline-none focus:ring-2`}
-            />
-            {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
-                Description is required you must be type
-              </p>
-            )}
-          </div>
 
           {/* Submit Button */}
           <button
@@ -227,6 +194,8 @@ const UpdateProduct = () => {
           </button>
         </form>
       </div>
+      </div>
+      
     </div>
   );
 };

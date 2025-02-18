@@ -61,25 +61,25 @@ const FAQSection = () => {
               </div>
 
               <div className="space-y-6">
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • Book Collection
                 </div>
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • Shipping & Delivery
                 </div>
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • Returns & Refunds
                 </div>
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • Payment Methods
                 </div>
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • Gift Cards & Bulk Orders
                 </div>
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • E-books & Audiobooks
                 </div>
-                <div className="text-[#9FA3AA] text-lg lg:text-2xl font-normal lg:font-semibold">
+                <div className="text-gray-600 text-lg lg:text-2xl font-normal lg:font-semibold">
                   • Customer Support
                 </div>
               </div>

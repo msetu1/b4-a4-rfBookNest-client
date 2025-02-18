@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CommonBanner from "../../components/Common/CommonBanner";
 
 const Gallery = () => {
   const [images] = useState([
@@ -11,7 +12,9 @@ const Gallery = () => {
   ]);
 
   return (
-    <div className="my-16 px-5">
+    <div>
+      <CommonBanner title="Captivating Moments: A Visual Journey" links="gallery" />
+      <div className="my-16 max-w-[90%] mx-auto">
       <h2 className="text-4xl font-bold text-center mb-10">Our Book Gallery</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {images.map((src, index) => (
@@ -26,6 +29,7 @@ const Gallery = () => {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

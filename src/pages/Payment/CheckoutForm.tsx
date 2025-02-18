@@ -5,7 +5,7 @@ import { ImSpinner9 } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { useCurrentUser } from "../../redux/feature/auth/authSlice";
-import { useAddOrderMutation } from "../../redux/feature/order/orderApi";
+import { useAddOrderMutation, useHandlePaymentSuccessMutation } from "../../redux/feature/order/orderApi";
 import { toast } from "sonner";
 
 const CheckoutForm = ({ closeModal, productInfo }) => {
@@ -16,8 +16,8 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
   const [cardError, setCardError] = useState("");
   const [processing, setProcessing] = useState(false);
   const user = useAppSelector(useCurrentUser);
-
-  const [addOrder] = useAddOrderMutation(); 
+  const [addOrder] = useAddOrderMutation();
+  const [handlePaymentSuccess] = useHandlePaymentSuccessMutation();
 
   useEffect(() => {
     if (productInfo?.price && productInfo?.price > 1) {
@@ -26,13 +26,12 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productInfo?.price]);
 
-  // get clientSecret using addOrder
   const getClientSecret = async (price) => {
     try {
       // Use the addOrder mutation to create payment intent
       const { data } = await addOrder(price); // This unwraps the mutation response
 
-      console.log(data)
+      console.log(data);
 
       if (data && data.clientSecret) {
         setClientSecret(data.clientSecret); // Set the client secret from the response
@@ -46,28 +45,24 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
   };
 
   const handleSubmit = async (event) => {
-    // Block native form submission
     event.preventDefault();
     setProcessing(true);
-
+  
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded
       return;
     }
-
+  
     const card = elements.getElement(CardElement);
-
+  
     if (card == null) {
       return;
     }
-
-    // Create payment method
+  
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
-
+  
     if (error) {
       console.log("[error]", error);
       setCardError(error.message);
@@ -76,8 +71,7 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
     } else {
       setCardError("");
     }
-
-    // Confirm payment with client secret
+  
     const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
       clientSecret,
       {
@@ -90,51 +84,64 @@ const CheckoutForm = ({ closeModal, productInfo }) => {
         },
       }
     );
-
+  
     if (confirmError) {
       console.log(confirmError);
       setCardError(confirmError.message);
       setProcessing(false);
       return;
     }
-
+  
     if (paymentIntent.status === "succeeded") {
-      // Create payment info object
       const paymentInfo = {
-        ...productInfo,
-        productId: productInfo._id,
+        product:productInfo,
+        paidStatus:true,
         transactionId: paymentIntent.id,
-        date: new Date(),
+        orderStatus:'confirmed',
+        userInfo:{
+          "name": user?.name,
+          "email": user?.email,
+          "role": user?.role,
+          "iat": user?.iat,
+          "exp": user?.exp
+      }
       };
-      delete paymentInfo._id;
-      console.log(paymentInfo);
-
+     
+  
       try {
-        // Step 1: Set payment info booking in the collection (DB)
-        // (This part can be kept as it is, assuming the API logic works)
-        // const { data } = await axiosSecure.post("/room-booking", paymentInfo);
-        // console.log(data);
+        // Step 1: Call the handlePaymentSuccess mutation to store order in the database
+        // const { data, error } = await handlePaymentSuccess(paymentInfo); // This sends payment data to your API
 
-        // // Step 2: Change room status to booked in DB
-        // await axiosSecure.patch(`/room/status/${productInfo?._id}`, {
-        //   status: true,
-        // });
-
-        // Step 3: Add order to Redux using addOrder mutation
-        addOrder(paymentInfo); // Dispatch the mutation to store order
-
-        // Step 4: Update UI, close modal, and redirect
-        toast.success("Order Payment successfully");
-        closeModal();
-        navigate("/user/dashboard/view-order-history");
+        const { data, error } = await handlePaymentSuccess(paymentInfo);
+console.log("Data:", data); // Inspect the response data
+console.log("Error:", error); // Inspect any error returned
+  
+        if (error) {
+          // Log the error from handlePaymentSuccess
+          console.error("Error from handlePaymentSuccess:", error);
+          toast.error("Failed to store payment info.");
+        } else {
+          if (data.success) {
+            // Step 2: Update the UI and navigate to the order history page
+            toast.success("Order Payment successfully");
+            closeModal();
+            navigate("/user/dashboard/view-order-history");
+          } else {
+            toast.error("Failed to store payment info.");
+          }
+        }
       } catch (err) {
-        console.log(err);
+        console.log("Error during payment success processing:", err);
         toast.error("Failed to process order");
       }
     }
-
+  
     setProcessing(false);
   };
+  
+
+
+
 
   return (
     <>

@@ -38,20 +38,23 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 items-center">
-            <Link to="/" className="text-lg hover:text-[#FFD700]">
+            <Link to="/" className="text-lg hover:text-blue-500">
               Home
             </Link>
-            <Link to="/all-product" className="text-lg hover:text-[#FFD700]">
+            <Link to="/all-product" className="text-lg hover:text-blue-500">
               All Products
             </Link>
-            <Link to="/gallery" className="text-lg hover:text-[#FFD700]">
+            <Link to="/gallery" className="text-lg hover:text-blue-500">
               Gallery
             </Link>
-            <Link to="/contact-us" className="text-lg hover:text-[#FFD700]">
+            <Link to="/about" className="text-lg hover:text-blue-500">
+              About Us
+            </Link>
+            <Link to="/contact-us" className="text-lg hover:text-blue-500">
               Contact us
             </Link>
             {!user && (
-              <Link to="/login" className="text-lg hover:text-[#FFD700]">
+              <Link to="/login" className="text-lg hover:text-blue-500">
                 Login
               </Link>
             )}
@@ -73,13 +76,13 @@ const Navbar = () => {
 
                 {/* Dropdown */}
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-whit z-10  border border-gray-200 rounded-lg shadow-lg">
+                  <div className="absolute right-0 mt-2 w-48 bg-gradient-to-br from-[#6a00f4] via-transparent to-purple-500 bg-black text-whit z-10  border border-gray-200 rounded-lg shadow-lg">
                     <ul className="py-1">
                       <li>
                         {user && (
                           <Link
                             to={`/${user.role}/dashboard`}
-                            className="block w-full text-left px-4 py-2 hover:bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] "
+                            className="block w-full text-left px-4 py-2 hover:bg-gradient-to-br from-purple-500 via-transparent to-[#6a00f4] "
                           >
                             Dashboard
                           </Link>
@@ -88,7 +91,7 @@ const Navbar = () => {
                       <li>
                         <button
                           onClick={handleLogout}
-                          className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                          className="block w-full text-left px-4 py-2 hover:hover:bg-gradient-to-br from-purple-500 via-transparent to-[#6a00f4]"
                         >
                           Logout
                         </button>
@@ -116,27 +119,27 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] space-y-4 py-4 px-6">
-          <Link to="/" className="block text-lg hover:text-[#FFD700]">
+          <Link to="/" className="block text-lg hover:text-blue-500">
             Home
           </Link>
           <Link
             to="/all-product"
-            className="block text-lg hover:text-[#FFD700]"
+            className="block text-lg hover:text-blue-500"
           >
             All Products
           </Link>
-          <Link to="/about-us" className="block text-lg hover:text-[#FFD700]">
+          <Link to="/about-us" className="block text-lg hover:text-blue-500">
             All Products
           </Link>
           {!user && (
-            <Link to="/login" className="block text-lg hover:text-[#FFD700]">
+            <Link to="/login" className="block text-lg hover:text-blue-500">
               About Us
             </Link>
           )}
           {user && (
             <Link
               to={`/${user.role}/dashboard`}
-              className="block text-lg hover:text-[#FFD700]"
+              className="block text-lg hover:text-blue-500"
             >
               Dashboard
             </Link>
@@ -144,7 +147,7 @@ const Navbar = () => {
           {user && (
             <button
               onClick={handleLogout}
-              className="block w-full text-left text-lg hover:text-[#FFD700]"
+              className="block w-full text-left text-lg hover:text-blue-500"
             >
               Logout
             </button>

@@ -27,7 +27,7 @@ const TouchSection = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto bg-gradient-to-br bg-black from-[#6a00f4] via-transparent to-purple-500 text-white p-8 lg:p-16 rounded-lg">
+    <div className="max-w-7xl mx-auto bg-gradient-to-br bg-black from-[#6a00f4] via-transparent to-purple-500 text-white p-8 lg:p-10 rounded-xl shadow-lg">
       <div className="flex flex-col lg:flex-row items-center gap-8">
         {/* Left Side - Image */}
         <div className="w-full lg:w-1/2 flex justify-center">
@@ -52,7 +52,7 @@ const TouchSection = () => {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your name..."
-                className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                className="w-full p-2 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
                 required
               />
             </div>
@@ -67,7 +67,7 @@ const TouchSection = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email..."
-                className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                className="w-full p-2 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
                 required
               />
             </div>
@@ -84,7 +84,7 @@ const TouchSection = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="Enter your number..."
-                  className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                  className="w-full p-2 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
                   required
                 />
               </div>
@@ -97,7 +97,7 @@ const TouchSection = () => {
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none cursor-pointer"
+                  className="w-full p-2 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none cursor-pointer"
                   required
                 >
                   <option value="">Choose service</option>
@@ -117,7 +117,7 @@ const TouchSection = () => {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Write your message..."
-                className="w-full p-3 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
+                className="w-full p-2 rounded-lg bg-[#1B1B31] border border-gray-700 focus:outline-none"
                 rows={3}
                 required
               ></textarea>
@@ -126,7 +126,7 @@ const TouchSection = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="mt-4 px-6 py-3 text-white font-medium rounded-lg bg-gradient-to-r from-[#6384FC] to-[#C16EFD] hover:opacity-90 transition duration-300 flex justify-center"
+              className="w-full  text-center  py-2 text-lg font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:from-blue-500 hover:to-purple-500 focus:outline-none"
             >
               Send Message
             </button>

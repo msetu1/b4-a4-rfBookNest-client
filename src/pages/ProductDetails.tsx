@@ -1,10 +1,11 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import { RingLoader } from "react-spinners";
-import { useAppSelector } from "../redux/hooks";
-import { toast } from "sonner";
+
 import { useAllBooksDataQuery } from "../redux/feature/productManagement/productAPi";
-import { useAddOrderMutation } from "../redux/feature/order/orderApi";
-import { useCurrentUser } from "../redux/feature/auth/authSlice";
+
+import GradientBackground from "../UI/GradientBackground";
+import CommonBanner from "../components/Common/CommonBanner";
+import ProceedToBuy from "./Payment/ProceedToBuy";
 
 type TBook = {
   authorEmail: string;
@@ -16,6 +17,7 @@ type TBook = {
   isDeleted: boolean;
   numberOfBooks: number;
   price: string;
+  bookDiscount:number;
   title: string;
   __v: number;
   _id: string;
@@ -23,66 +25,65 @@ type TBook = {
 const ProductDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useAllBooksDataQuery(undefined);
-  const [addOrder] = useAddOrderMutation();
-  const navigate = useNavigate();
-  //   console.log(id);
-
-  //   console.log(data.data);
+ ;
   const bookData = data?.data?.find((item: TBook) => item._id === id);
 
-  const user = useAppSelector(useCurrentUser);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] px-4">
-        <RingLoader size={80} color="#1ca944" />
-      </div>
-    );
-  }
+ // loading 
+ if (isLoading) {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden text-white text-center px-4 bg-black">
+      <GradientBackground />
+      <RingLoader  size={80} color="#C16EFD" />
+    </div>
+  );
+}
 
-  const handleProceedToBuy = async (id: string) => {
-    if (!user) {
-      toast.error("You want to login first..");
-      return navigate("/login");
-    }
+  // const handleProceedToBuy = async (id: string) => {
+  //   if (!user) {
+  //     toast.error("You want to login first..");
+  //     return navigate("/login");
+  //   }
 
-    if (bookData.numberOfBooks < 1) {
-      return toast.error("Insufficient stock", { duration: 2000 });
-    }
+  //   if (bookData.numberOfBooks < 1) {
+  //     return toast.error("Insufficient stock", { duration: 2000 });
+  //   }
 
-    // console.log(id);
-    if (user?.email === bookData?.authorEmail) {
-      return toast.error("You cannot buy your own product");
-    }
+  //   // console.log(id);
+  //   if (user?.email === bookData?.authorEmail) {
+  //     return toast.error("You cannot buy your own product");
+  //   }
 
-    const productInfo = {
-      productId: id,
-      userInfo: {
-        ...user,
-      },
-    };
+  //   const productInfo = {
+  //     productId: id,
+  //     userInfo: {
+  //       ...user,
+  //     },
+  //   };
 
-    const result = await addOrder(productInfo).unwrap();
+  //   const result = await addOrder(productInfo).unwrap();
 
-    window.location.replace(result.url);
-  };
+  //   window.location.replace(result.url);
+  // };
+
   return (
     <div>
-      <div className="min-h-screen bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-white p-6">
+      <CommonBanner title="Explore the Features: Product Insights" links="Product Details" />
+      <div className=" text-white mt-16">
         {/* Book Details Container */}
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 mt-20">
+        <div className="bg-gradient-to-br from-purple-500 via-transparent to-[#6a00f4] max-w-[90%] mx-auto flex flex-col md:flex-row items-center gap-8 bg-black p-8 rounded-xl shadow-lg">
           {/* Book Cover */}
           <div className="w-full md:w-1/3">
             <img
               src={bookData?.imageUrl}
               alt="Book Cover"
-              className="w-full h-[300px] rounded-lg shadow-lg "
+              className="w-full h-full rounded-lg shadow-lg "
             />
           </div>
 
           {/* Book Information */}
           <div className="w-full md:w-2/3">
-            <h1 className="text-3xl font-bold mb-4">{bookData?.title}</h1>
+            <h1 className="text-xl font-bold mb-2">{bookData?.title}</h1>
             <h2 className="text-lg text-blue-400 mb-2">
               By {bookData?.authorName}
             </h2>
@@ -91,22 +92,24 @@ const ProductDetails = () => {
               <span className="font-semibold">Category : </span>{" "}
               {bookData?.category}
             </p>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-400 mt-6">
               <span className="font-semibold">Number Of Books : </span>{" "}
               {bookData?.numberOfBooks}
+            </p>
+            <p className="text-gray-400 mt-2">
+            Discount on purchasing 5 books
+            </p>
+            <p className="text-gray-400 ">
+              <span className="font-semibold">Discount : </span>
+              {bookData?.bookDiscount} %
             </p>
 
             {/* Price and Action */}
             <div className="flex items-center justify-between">
               <span className="text-2xl font-bold text-blue-400">
-                ৳ {bookData?.price}
+                $ {bookData?.price}
               </span>
-              <button
-                onClick={() => handleProceedToBuy(bookData?._id)}
-                className="px-4 py-2  text-sm font-medium transition text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:from-blue-500 hover:to-purple-500 focus:outline-none"
-              >
-                Proceed To Buy
-              </button>
+              <ProceedToBuy bookData={bookData} />
             </div>
           </div>
         </div>

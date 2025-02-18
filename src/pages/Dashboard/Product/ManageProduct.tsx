@@ -4,10 +4,11 @@ import {
   useDeleteBookMutation,
 } from "../../../redux/feature/productManagement/productAPi";
 import { useAppSelector } from "../../../redux/hooks";
-
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
 import { useCurrentUser } from "../../../redux/feature/auth/authSlice";
+import HomeGradient from "../../../UI/HomeGradient";
+import GradientBackground from "../../../UI/GradientBackground";
+import { Link } from "react-router-dom";
 
 type TBook = {
   authorEmail: string;
@@ -19,12 +20,14 @@ type TBook = {
   isDeleted: boolean;
   numberOfBooks: number;
   price: string;
+  bookDiscount:number;
   title: string;
   __v: number;
   _id: string;
 };
 const ManageProduct = () => {
-  const { data, isLoading } = useAllBooksDataQuery(undefined, {
+  
+  const { data, isLoading} = useAllBooksDataQuery(undefined, {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
@@ -34,31 +37,27 @@ const ManageProduct = () => {
   const user = useAppSelector(useCurrentUser);
   
 
-  
-
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] px-4">
-        <RingLoader size={80} color="#1ca944" />
+      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden text-white text-center px-4 bg-black">
+        <GradientBackground />
+        <RingLoader  size={80} color="#C16EFD" />
       </div>
     );
   }
 
   const allBooksData = data?.data;
-  // console.log(allBooksData);
 
   const matchBook = allBooksData.filter(
     (item: TBook) => item?.authorEmail === user?.email
   );
 
   const handleDeleteProduct = async (id: string) => {
-    // console.log(id);
     const bookInfo = {
       id: id,
     };
     try {
       const result = await deleteBook(bookInfo).unwrap();
-      // console.log(result);
       toast.success(result?.message, { duration: 2000 });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -67,11 +66,10 @@ const ManageProduct = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31]">
+    <div className="min-h-screen bg-black">
+    <HomeGradient/>
+      <h1 className="text-3xl font-bold text-white pt-5 ml-4 mb-6">My Books</h1>
       <div className="container p-2 mx-auto sm:p-4  text-white">
-        <h2 className="mb-8 text-4xl font-semibold leading-tight text-center">
-          My Books
-        </h2>
         <div className="">
           <div className="">
             <table className="min-w-full  h-full text-xs">
@@ -84,28 +82,25 @@ const ManageProduct = () => {
                 <col />
                 <col />
               </colgroup>
-              <thead className="">
+              <thead className="border border-gray-700 bg-[#1B1B31]">
                 <tr className="text-left">
                   <th className="p-3 text-base">Image</th>
                   <th className="p-3 text-base">Title</th>
                   <th className="p-3 text-base">category</th>
                   <th className="p-3 text-base">price</th>
                   <th className="p-3 text-base">Number Of Books</th>
+                  <th className="p-3 text-base">Book Discount</th>
                   <th className="p-3 text-base">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="border border-gray-700">
                 {matchBook.map((item: TBook) => (
-                  <tr key={item._id} className="border-b border-opacity-20 ">
+                  <tr key={item._id} className="border-b border-gray-300 border-opacity-20 ">
                     <td className="p-3">
-                      <div className="flex items-center justify-start">
-                        <div className="w-14 h-14  overflow-hidden ">
-                          <img
-                            className="w-full h-full object-cover rounded-full"
+                    <img
+                            className="w-[80px] h-[60px] object-cover rounded-lg"
                             src={item?.imageUrl}
                           />
-                        </div>
-                      </div>
                     </td>
                     <td className="p-3">
                       <p>{item?.title}</p>
@@ -119,44 +114,15 @@ const ManageProduct = () => {
                     <td className="p-3 ">
                       <p>{item?.numberOfBooks}</p>
                     </td>
-                    {/* <td className="p-3 relative">
-                      <button
-                        onClick={() => toggleDropdown(item._id)}
-                        className="relative text-2xl"
-                      >
-                        <BsThreeDotsVertical />
-                      </button>
-                      {dropdownOpen === item._id && (
-                        <div className="absolute right-0 mt-2 w-48 bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-white z-10 border border-gray-200 rounded-lg shadow-lg ">
-                          <ul className="py-1 space-y-2">
-                            <li>
-                              <button className="text-center py-2 bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-white z-10 border border-gray-200 rounded-lg shadow-lg w-full">
-                                <Link
-                                  to={`/admin/dashboard/update-product/${item._id}`}
-                                
-                                >
-                                  Update
-                                </Link>
-                              </button>
-                            </li>
-                            {user && (
-                              <button
-                                onClick={() => handleDeleteProduct(item?._id)}
-                                className="text-center  py-2 bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-white z-10 border border-gray-200 rounded-lg shadow-lg w-full"
-                              >
-                                Delete
-                              </button>
-                            )}
-                          </ul>
-                        </div>
-                      )}
-                    </td> */}
+                    <td className="p-3 ">
+                      <p>{item?.bookDiscount}</p>
+                    </td>
                     <td className="pt-7 flex items-center justify-start gap-2">
                       <Link
                         to={`/admin/dashboard/update-product/${item._id}`}
                         className="text-white bg-gradient-to-r from-purple-500 to-blue-500  hover:from-blue-500 hover:to-purple-500 focus:outline-none  text-xs py-1 px-3 rounded-full hover:bg-blue-600"
                       >
-                        <span className="text-white">Update</span>
+                        <span className="text-white">update</span>
                       </Link>
                       <button
                         onClick={() => handleDeleteProduct(item?._id)}

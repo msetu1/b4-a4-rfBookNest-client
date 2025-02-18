@@ -4,61 +4,73 @@ const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     addOrder: builder.mutation({
       query: (bookInfo) => ({
-        url: "/order",
+        url: "/create-payment-intent",
         method: "POST",
         body: bookInfo,
       }),
     }),
-    getAdminOrdersData: builder.query({
-      query: (userEmail) => ({
-        url: "/payment/get-admin-order-data",
-        method: "PUT",
-        body: { email: userEmail }, // অবজেক্ট আকারে ইমেইল পাঠানো হচ্ছে
-        headers: {
-          "Content-Type": "application/json", // JSON ডেটা প্রেরণের জন্য সঠিক হেডার
-        },
-      }),
-    }),
-    getUserOrdersData: builder.query({
-      query: (userEmail) => ({
-        url: "/payment/get-user-order-data",
-        method: "PUT",
-        body: { email: userEmail }, // অবজেক্ট আকারে ইমেইল পাঠানো হচ্ছে
-        headers: {
-          "Content-Type": "application/json", // JSON ডেটা প্রেরণের জন্য সঠিক হেডার
-        },
-      }),
+    handlePaymentSuccess: builder.mutation({
+      query: (paymentData) => {
+console.log('payment data orderApi',paymentData)
+        return {
+          url: "/orders/success",
+          method: "POST",
+          body: paymentData,
+        }
+      },
     }),
 
-    acceptOrder: builder.mutation({
-      query: (bookInfo) => ({
-        url: "/payment/accept-order",
-        method: "PUT",
-        body: bookInfo,
-      }),
-    }),
-    cencelOrder: builder.mutation({
-      query: (bookInfo) => ({
-        url: "/payment/cencel-order",
-        method: "PUT",
-        body: bookInfo,
-      }),
-    }),
-    deleteOrder: builder.mutation({
-      query: (orderInfo) => ({
-        url: "/payment/delete-order",
-        method: "PUT",
-        body: orderInfo,
-      }),
-    }),
+    // adminOrdersData: builder.query({
+    //   query: (userEmail) => ({
+    //     url: "/orders/admin-order-data",
+    //     method: "PUT",
+    //     body: { email: userEmail }, // অবজেক্ট আকারে ইমেইল পাঠানো হচ্ছে
+    //     headers: {
+    //       "Content-Type": "application/json", 
+    //     },
+    //   }),
+    // }),
+    // userOrdersData: builder.query({
+    //   query: (userEmail) => ({
+    //     url: "/orders/user-order-data",
+    //     method: "PUT",
+    //     body: { email: userEmail }, // অবজেক্ট আকারে ইমেইল পাঠানো হচ্ছে
+    //     headers: {
+    //       "Content-Type": "application/json", 
+    //     },
+    //   }),
+    // }),
+
+    // acceptOrder: builder.mutation({
+    //   query: (bookInfo) => ({
+    //     url: "/orders/accept-order",
+    //     method: "PUT",
+    //     body: bookInfo,
+    //   }),
+    // }),
+    // cancelOrder: builder.mutation({
+    //   query: (bookInfo) => ({
+    //     url: "/orders/cancel-order",
+    //     method: "PUT",
+    //     body: bookInfo,
+    //   }),
+    // }),
+    // deleteOrder: builder.mutation({
+    //   query: (orderInfo) => ({
+    //     url: "/orders/delete-order",
+    //     method: "PUT",
+    //     body: orderInfo,
+    //   }),
+    // }),
   }),
 });
 
 export const {
   useAddOrderMutation,
-  useGetAdminOrdersDataQuery,
-  useGetUserOrdersDataQuery,
-  useAcceptOrderMutation,
-  useCencelOrderMutation,
-  useDeleteOrderMutation,
+//  useAdminOrdersDataQuery,
+//   useUserOrdersDataQuery,
+//   useAcceptOrderMutation,
+//   useCancelOrderMutation,
+//   useDeleteOrderMutation,
+  useHandlePaymentSuccessMutation
 } = orderApi;

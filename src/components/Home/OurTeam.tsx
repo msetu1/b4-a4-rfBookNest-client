@@ -38,7 +38,7 @@ const OurTeam = () => {
               <h2 className="text-3xl font-bold  mb-2">Our mission</h2>
               <img src='https://i.ibb.co.com/ZRCHTwMK/Rectangle-68.png' alt="" />
             </div>
-            <p className="text-lg">At BookNest, our mission is to connect people with the transformative power of books. We believe that books have the ability to inspire, educate, and entertain, shaping lives in ways that go beyond the written word. Our goal is to create a space where readers of all ages and interests can discover new worlds, expand their horizons, and fuel their imaginations.
+            <p className="text-lg text-gray-500">At BookNest, our mission is to connect people with the transformative power of books. We believe that books have the ability to inspire, educate, and entertain, shaping lives in ways that go beyond the written word. Our goal is to create a space where readers of all ages and interests can discover new worlds, expand their horizons, and fuel their imaginations.
               <br /> <br />
               We are committed to providing a wide selection of high-quality books across genres, ensuring that everyone can find something that speaks to them. Whether you’re a lifelong reader or new to the world of books, BookNest is here to help you find your next great read. Beyond our curated book selection, we also aim to create a welcoming, user-friendly experience that makes book shopping enjoyable and convenient.</p>
           </div>
@@ -47,8 +47,8 @@ const OurTeam = () => {
         {/* Meet our team */}
         <div className="my-16">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold">Meet Our Team</h2>
-            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of <br /> classical Latin literature from 45 BC, making it over 2000 years old.</p>
+            <h2 className="text-3xl font-bold ">Meet Our Team</h2>
+            <p className="text-gray-500">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of <br /> classical Latin literature from 45 BC, making it over 2000 years old.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {ourTeam?.map((team, index) => (
@@ -78,7 +78,7 @@ const OurTeam = () => {
               <h2 className="text-3xl font-bold  mb-2 ">Our service</h2>
               <img src='https://i.ibb.co.com/ZRCHTwMK/Rectangle-68.png' alt="" />
             </div>
-            <p className="text-lg">At BookNest, we are dedicated to offering more than just books – we provide an exceptional, personalized experience for every book lover. Our services are designed to make your journey through the world of literature effortless and enjoyable.
+            <p className="text-lg text-gray-500">At BookNest, we are dedicated to offering more than just books – we provide an exceptional, personalized experience for every book lover. Our services are designed to make your journey through the world of literature effortless and enjoyable.
               <br /> <br />
               Wide Selection of Books: We offer a vast range of books across multiple genres, from bestsellers to hidden gems, catering to all age groups and interests. Whether you're into fiction, non-fiction, mystery, self-help, or children's books, we've got something for everyone.
 

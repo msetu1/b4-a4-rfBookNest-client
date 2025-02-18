@@ -32,7 +32,8 @@ const AccountSettings = ({ user }) => {
                         <div className="flex items-center space-x-3 text-white">
                               <FaClock className="text-blue-500" />
                               <p className="font-medium">
-                                    <span className="text-white font-semibold">Last Login:</span> {formattedDate || "N/A"}
+                                    <span className="text-white font-semibold">Last Login:</span>
+                                     {formattedDate || "N/A"}
                               </p>
                         </div>
                   </div>

@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 const Slide1 = () => {
     return (
@@ -16,7 +16,9 @@ const Slide1 = () => {
           <p className="text-white mt-3 font-semibold">📚 Dive into an endless collection of books from every genre, <br /> carefully curated for book lovers like you.</p>
           <br />
          <div className="flex items-center justify-center">
-         <Button className=" px-8 py-5 text-sm text-white font-medium border border-[#C16EFD] rounded-lg bg-[linear-gradient(105deg,_#6384FC_4.1%,_#C16EFD_54.8%,_#6384FC_92.38%)] flex items-center justify-center">All Book</Button>
+         <Link to='/all-product'>
+         <button className="mt-6 px-8 py-2  font-semibold bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg hover:from-blue-500 hover:to-purple-500 focus:outline-none text-white">All Book</button>
+         </Link>
          </div>
         </div>
       </div>

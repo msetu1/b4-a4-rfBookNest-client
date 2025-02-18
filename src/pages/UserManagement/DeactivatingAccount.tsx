@@ -6,6 +6,8 @@ import {
   useDeactivateAccountMutation,
 } from "../../redux/feature/auth/authApi";
 import { toast } from "sonner";
+import HomeGradient from "../../UI/HomeGradient";
+import GradientBackground from "../../UI/GradientBackground";
 
 type TUser = {
   createdAt: string; // ISO date string
@@ -31,8 +33,9 @@ const DeactivatingAccounts = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] px-4">
-        <RingLoader size={80} color="#1ca944" />
+      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden text-white text-center px-4 bg-black">
+        <GradientBackground />
+        <RingLoader  size={80} color="#C16EFD" />
       </div>
     );
   }
@@ -101,11 +104,13 @@ const DeactivatingAccounts = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-white p-6 min-h-screen">
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto">
+    <div className="bg-black min-h-screen">
+      <HomeGradient/>
+      <h1 className="text-3xl font-bold text-white pt-5 ml-4 mb-6">User Management</h1>
+      <div className="container p-2 mx-auto sm:p-4 overflow-x-auto text-white ">
+        <table className="min-w-full table-auto ">
           {/* head */}
-          <thead>
+          <thead className="border border-gray-700 bg-[#1B1B31]">
             <tr>
               <th className="px-6 py-3 text-left">Name</th>
               <th className="px-6 py-3 text-left">Email</th>
@@ -114,10 +119,10 @@ const DeactivatingAccounts = () => {
               <th className="px-6 py-3 text-left">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="border border-gray-700">
             {/* row 1 */}
             {usersData?.map((item: TUser, idx: number) => (
-              <tr key={idx} className="border-b">
+              <tr key={idx} className="border-b border-gray-700">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div>
@@ -131,7 +136,7 @@ const DeactivatingAccounts = () => {
                 <td className="px-6 py-4">
                   <div className="font-bold">{item.role}</div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 text-black">
                   <select
                     onChange={(e) =>
                       handleRoleChange(e.target.value, item.email)
@@ -139,21 +144,21 @@ const DeactivatingAccounts = () => {
                     defaultValue={""}
                     className="border rounded-lg px-2 py-1 focus:outline-none"
                   >
-                    <option value="" disabled className="bg-[#1C1C32]">
+                    <option value="" disabled className="bg-[#1C1C32] text-white">
                       Select Role
                     </option>
 
                     <option
                       value={"user"}
                       disabled={item.role === "user"}
-                      className=" bg-[#1C1C32]"
+                      className=" bg-[#1C1C32] text-white"
                     >
                       User
                     </option>
                     <option
                       value={"admin"}
                       disabled={item.role === "admin"}
-                      className="bg-[#1C1C32]"
+                      className="bg-[#1C1C32] text-white"
                     >
                       Admin
                     </option>

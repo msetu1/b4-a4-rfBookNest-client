@@ -70,11 +70,11 @@ const NewArrivals = () => {
       <Slider {...settings}>
         {books.map((book) => (
           <div key={book.id} className="p-4">
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-purple-500 via-transparent to-[#6a00f4] text-white bg-black rounded-lg shadow-xl overflow-hidden">
               {/* Image Section */}
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center pt-5">
                 <img 
-                  className="w-[210px] h-[240px] object-cover" 
+                  className="w-[210px] h-[240px] object-cover rounded-lg" 
                   src={book.image} 
                   alt={book.title} 
                 />
@@ -83,8 +83,8 @@ const NewArrivals = () => {
               {/* Content Section */}
               <div className="p-4">
                 <h3 className="text-xl font-semibold">{book.title}</h3>
-                <p className="text-sm text-gray-600">by {book.author}</p>
-                <p className="my-2 text-gray-600">{book.description}</p><p className="mt-2 text-xl text-end font-bold text-blue-600">{book.price}</p>
+                <p className="text-sm text-white">by {book.author}</p>
+                <p className="my-2 text-white">{book.description}</p><p className="mt-2 text-xl text-end font-bold ">{book.price}</p>
               </div>
             </div>
           </div>
