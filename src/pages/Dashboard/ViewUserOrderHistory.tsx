@@ -152,7 +152,7 @@ return (
       {/* Modal */}
       {selectedAuthor && (
         <div className="fixed inset-0 flex items-center justify-center z-5">
-          <div className="bg-gradient-to-b from-[#1B1B31] via-[#2B1E36] to-[#1B1B31] text-white rounded-lg w-96 p-6 relative">
+          <div className="bg-black bg-gradient-to-br from-[#6a00f4] via-transparent to-purple-500 text-white rounded-lg w-96 p-6 relative">
             <h3 className="font-bold text-lg mb-4">Author Details</h3>
             <p className="py-2">
               <strong>Name:</strong> {selectedAuthor?.product?.authorName}

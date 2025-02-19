@@ -14,7 +14,7 @@ type User = {
     };
     
     type EditProfileFormProps = {
-      user: User;
+      user: User | null;
     };
 
 const AdminEditProfileForm: React.FC<EditProfileFormProps> = ({user}) => {

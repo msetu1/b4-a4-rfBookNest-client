@@ -1,6 +1,9 @@
 import { FaFacebook, FaGithub, FaLinkedin, FaMapMarkerAlt } from "react-icons/fa";
 import { MdOutlineHome, MdOutlineLocationCity } from "react-icons/md";
-import { AdditionalSettingsProps } from "../../types/dataTypes";
+import { TUser } from "../../types/dataTypes";
+export interface AdditionalSettingsProps {
+      user: TUser | null; // Make sure TUser includes the required properties like address and socialLinks
+    }
 
 const AdminAdditionalInfo = ({user}: AdditionalSettingsProps) => {
     return (

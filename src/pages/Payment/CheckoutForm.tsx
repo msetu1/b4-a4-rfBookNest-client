@@ -26,27 +26,27 @@ const CheckoutForm = ({ closeModal, productInfo }: CheckoutFormProps) => {
   const [handlePaymentSuccess] = useHandlePaymentSuccessMutation();
 
   useEffect(() => {
-    if (productInfo?.price && productInfo?.price > 1) {
-      getClientSecret({ price: productInfo?.price });
+    if (productInfo?.price && productInfo.price > 1) {
+      getClientSecret(productInfo.price);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productInfo?.price]);
-
-  const getClientSecret = async (price) => {
+  }, [productInfo?.price]); // Keep the dependency on productInfo.price
+  
+  const getClientSecret = async (price:number) => {
     try {
-      // Use the addOrder mutation to create payment intent
-      const { data } = await addOrder(price); 
-
+      // Use the addOrder mutation to create a payment intent
+      const { data } = await addOrder({ price });
+  
       if (data && data.clientSecret) {
-        setClientSecret(data.clientSecret); 
+        setClientSecret(data.clientSecret);
       } else {
         throw new Error("Client secret is missing in the response");
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Error creating payment intent");
+      console.error(error); // Optionally log the error for debugging
     }
   };
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -68,7 +68,7 @@ const CheckoutForm = ({ closeModal, productInfo }: CheckoutFormProps) => {
     });
   
     if (error) {
-      setCardError(error.message);
+      setCardError(error.message as string);
       setProcessing(false);
       return;
     } else {
@@ -94,7 +94,7 @@ const CheckoutForm = ({ closeModal, productInfo }: CheckoutFormProps) => {
     );
   
     if (confirmError) {
-      setCardError(confirmError.message);
+      setCardError(confirmError.message as string);
       setProcessing(false);
       return;
     }

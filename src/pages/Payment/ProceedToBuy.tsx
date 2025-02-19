@@ -9,7 +9,6 @@ interface ProceedToBuyProps {
 
 const ProceedToBuy = ({ bookData }: ProceedToBuyProps) => {
   const [isOpen, setIsOpen] = useState(false);
- 
   const numberOfBooks = bookData.numberOfBooks; 
   const discount = bookData.bookDiscount; 
   const price = Number(bookData.price); 
